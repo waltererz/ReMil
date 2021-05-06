@@ -3,7 +3,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class InsertModel extends Model {
+class CommentModel extends Model {
     protected $table            = 'comments';
     protected $primaryKey       = 'id';
 
