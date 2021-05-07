@@ -34,9 +34,6 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
-$routes->get('/sinmungo/insert/form', 'Sinmungo::form');
-$routes->get('/sinmungo/insert/post', 'Sinmungo::post');
-
 /*
  * --------------------------------------------------------------------
  * Additional Routing

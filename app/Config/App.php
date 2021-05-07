@@ -23,7 +23,7 @@ class App extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $baseURL = 'http://remil.kr';
+	public $baseURL = 'https://remil.kr';
 
 	/**
 	 * --------------------------------------------------------------------------

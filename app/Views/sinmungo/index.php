@@ -1,14 +1,4 @@
-<ul class="nav nav-pills">
-    <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">전체목록</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">글쓰기</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">검색하기</a>
-    </li>
-</ul>
+<?php echo $menu; ?>
 <div class="highlight col-lg-12">
     <div class="card text-center">
         <div class="card-header">최고의 추천</div>

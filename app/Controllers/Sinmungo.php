@@ -6,19 +6,44 @@ class Sinmungo extends BaseController
 {
 	public function index()
 	{
-        // 신문고 view에서 사용되는 각종 변수 저장
         $data = [
-            // 레이아웃에 사용될 신문고 view 파일 내용 (레이아웃 view에서 변수 contents를 활용해 사용)
-            'contents' => view('sinmungo/index'),
+            'contents' => view('sinmungo/index', ['menu' => view('sinmungo/menu')]),
         ];
 
 		return view('layouts/index', $data);
 	}
 
+    public function list()
+    {
+        $data = [
+            'contents' => view('sinmungo/list', ['menu' => view('sinmungo/menu')]),
+        ];
+
+		return view('layouts/index', $data);
+    }
+
+    public function view()
+    {
+        $data = [
+            'contents' => view('sinmungo/view', ['menu' => view('sinmungo/menu')]),
+        ];
+
+		return view('layouts/index', $data);
+    }
+
     public function form()
     {
         $data = [
-            'contents' => view('sinmungo/form'),
+            'contents' => view('sinmungo/form', ['menu' => view('sinmungo/menu')]),
+        ];
+
+        return view('layouts/index', $data);
+    }
+
+    public function search()
+    {
+        $data = [
+            'contents' => view('sinmungo/search', ['menu' => view('sinmungo/menu')]),
         ];
 
         return view('layouts/index', $data);
@@ -27,6 +52,20 @@ class Sinmungo extends BaseController
     public function post()
     {
         // comments 테이블에 데이터를 입력하기 위해 모델을 불러옴
-        $commentModel = model('App/Models/CommentModel');
+        $commentModel = model('App\Models\CommentModel');
+        
+        $data = [
+            'email' => $_POST['email'],
+            'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+            'category' => $_POST['category'],
+            'unit' => $_POST['unit'],
+            'comment' => $_POST['comment'],
+            'timestamp' => time(),
+        ];
+
+        $commentModel->insert($data);
+        
+        header("Location: https://remil.kr/sinmungo/list");
+        exit();
     }
 }
