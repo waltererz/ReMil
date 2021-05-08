@@ -13,18 +13,26 @@
             <label for="inputCategory" class="form-label">분류</label>
             <select id="inputCategory" name="category" class="form-select">
                 <option value="0" selected>어떤 내용을 신고하려고 합니까?</option>
-                <option value="1">부당한지시</option>
-                <option value="2">인권침해</option>
-                <option value="3">불군기행위</option>
+                <?php 
+                    foreach ($categories as $category) {
+                ?>
+                    <option value="<?php echo $category->id; ?>"><?php echo $category->category; ?></option>
+                <?php
+                    }
+                ?>
             </select>
         </div>
         <div class="col-lg-6">
             <label for="inputUnit" class="form-label">부대명</label>
             <select id="inputUnit" name="unit" class="form-select">
-                <option value="0" selected>자신의 부대를 선택해주세요. (최대 사단/여단/함대/비행단급)</option>
-                <option value="1">군단</option>
-                <option value="2">사단</option>
-                <option value="3">비행단</option>
+                <option value="0" selected>자신의 부대를 선택해주세요. (해당되는 부대가 없다면 상급부대 선택)</option>
+                <?php 
+                    foreach ($units as $unit) {
+                ?>
+                    <option value="<?php echo $unit->id; ?>"><?php echo $unit->unit; ?></option>
+                <?php
+                    }
+                ?>
             </select>
         </div>
         <div class="col-lg-12">
@@ -32,26 +40,30 @@
                 <input type="text" name="subject" class="form-control" id="inputSubject">
             </div>
         <div class="col-lg-12">
-            <div class="form-floating">
-                <textarea class="form-control" name="comment" placeholder="이곳에 내용을 입력하세요." id="inputComment" style="height: 100px"></textarea>
-                <label for="inputComment">내용</label>
-            </div>
+            <textarea name="comment" id="editor"></textarea>
         </div>
         <div class="col-lg-12">
             <button type="button" id="form-button" class="btn btn-primary">등록하기</button>
         </div>
     </form>
 </div>
+<script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
 <script type="text/javascript">
+let editor;
+ClassicEditor.create(document.querySelector('#editor'), {
+    removePlugins: ['imageInsert'],
+}).then( newEditor => {
+    editor = newEditor;
+});
 const submit = document.getElementById('form-button');
 submit.addEventListener('click', function (t) {
     const inputEmail = document.getElementById('inputEmail').value;
     const inputPassword = document.getElementById('inputPassword').value;
     const inputCategory = document.getElementById('inputCategory').value;
     const inputUnit = document.getElementById('inputUnit').value;
-    const inputComment = document.getElementById('inputComment').value;
+    const inputComment = editor.getData();
 
-    if (!inputEmail || !inputPassword ||  inputCategory == 0 || inputUnit == 0 || !inputComment) {
+    if (!inputEmail || !inputPassword ||  inputCategory == 0 || inputUnit == 0 || inputComment.length < 20) {
         alert('모든 필수사항을 입력하세요.');
     } else {
         const form = document.getElementById('insertForm');

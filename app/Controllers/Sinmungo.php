@@ -15,11 +15,21 @@ class Sinmungo extends BaseController
 
     public function list()
     {
-        if (!isset($_GET['page'])) {
+        if (!isset($_GET['page']) || !$_GET['page']) {
             $_GET['page'] = 1;
         }
 
+        if (!isset($_GET['category']) || !$_GET['category']) {
+            $_GET['category'] = '';
+        }
+
+        if (!isset($_GET['unit']) || !$_GET['unit']) {
+            $_GET['unit'] = '';
+        }
+
         $commentModel = model('App\Models\CommentModel');
+        $unitModel = model('App\Models\UnitModel');
+        $categoryModel = model('App\Models\CategoryModel');
 
         // 이전 버튼 활성화
         $prevButton = false;
@@ -34,7 +44,15 @@ class Sinmungo extends BaseController
         $linkPerPage = 5;
 
         // 전체 목록 수
-        $totalComments = $commentModel->countAll();
+        $comments = $commentModel->withDeleted();
+        if ($_GET['category'] != '') {
+            $comments = $comments->where('category', $_GET['category']);
+        }
+        if ($_GET['unit'] != '') {
+            $comments = $comments->where('unit', $_GET['unit']);
+        }
+        $totalComments = $comments->countAllResults();
+        unset($comment);
 
         // 전체 페이지 수
         $totalPage = ceil($totalComments / $listPerPage);
@@ -74,23 +92,32 @@ class Sinmungo extends BaseController
         $paging = array($links, $prevButton, $nextButton);
 
         // 데이터 리스트를 불러옴
-        $result = $commentModel->withDeleted()->orderBy('id', 'desc')->findAll($listPerPage, ($_GET['page'] - 1) * $listPerPage);
+        $comments = $commentModel->withDeleted()->orderBy('id', 'desc');
+        if ($_GET['category'] != '') {
+            $comments = $comments->where('category', $_GET['category']);
+        }
+        if ($_GET['unit'] != '') {
+            $comments = $comments->where('unit', $_GET['unit']);
+        }
+        $result = $comments->findAll($listPerPage, ($_GET['page'] - 1) * $listPerPage);
+        unset($comments);
         $list = [];
 
         for ($i=0; $i<count($result); $i++) {
             $list[$i] = new \stdClass();
             $list[$i]->id = $result[$i]->id;
             $list[$i]->order = $totalComments - ((($_GET['page'] - 1) * $listPerPage) + $i);
-            $list[$i]->category = $result[$i]->category;
-            $list[$i]->unit = $result[$i]->unit;
+            $list[$i]->unit = $unitModel->withDeleted()->where('id', $result[$i]->unit)->first()->unit;
+            $list[$i]->category = $categoryModel->withDeleted()->where('id', $result[$i]->category)->first()->category;
             $list[$i]->subject = $result[$i]->subject;
             $list[$i]->short = mb_substr(str_replace('<br />', ' ', $result[$i]->comment), 0, 100, 'utf-8');
             $list[$i]->timestamp = $result[$i]->timestamp;
         }
 
         $data = [
-            'contents' => view('sinmungo/list', ['menu' => view('sinmungo/menu'), 'list' => $list, 'paging' => $paging]),
+            'contents' => view('sinmungo/list', ['menu' => view('sinmungo/menu'), 'list' => $list, 'paging' => $paging, 'search_unit' => $_GET['unit'], 'search_category' => $_GET['category']])
         ];
+        
 
 		return view('layouts/index', $data);
     }
@@ -98,12 +125,14 @@ class Sinmungo extends BaseController
     public function view()
     {
         $commentModel = model('App\Models\CommentModel');
+        $unitModel = model('App\Models\UnitModel');
+        $categoryModel = model('App\Models\CategoryModel');
         $result = $commentModel->withDeleted()->where('id', $_GET['id'])->first();
         
         $comment = new \stdClass();
         $comment->subject = $result->subject;
-        $comment->category = $result->category;
-        $comment->unit = $result->unit;
+        $comment->category = $categoryModel->withDeleted()->where('id', $result->category)->first()->category;
+        $comment->unit = $unitModel->withDeleted()->where('id', $result->unit)->first()->unit;
         $comment->comment = $result->comment;
         $comment->timestamp = $result->timestamp;
 
@@ -116,8 +145,13 @@ class Sinmungo extends BaseController
 
     public function form()
     {
+        $unitModel = model('App\Models\UnitModel');
+        $categoryModel = model('App\Models\CategoryModel');
+        $units = $unitModel->withDeleted()->findAll();
+        $categories = $categoryModel->withDeleted()->findAll();
+
         $data = [
-            'contents' => view('sinmungo/form', ['menu' => view('sinmungo/menu')]),
+            'contents' => view('sinmungo/form', ['menu' => view('sinmungo/menu'), 'units' => $units, 'categories' => $categories]),
         ];
 
         return view('layouts/index', $data);
@@ -125,8 +159,13 @@ class Sinmungo extends BaseController
 
     public function search()
     {
+        $unitModel = model('App\Models\UnitModel');
+        $categoryModel = model('App\Models\CategoryModel');
+        $units = $unitModel->withDeleted()->findAll();
+        $categories = $categoryModel->withDeleted()->findAll();
+
         $data = [
-            'contents' => view('sinmungo/search', ['menu' => view('sinmungo/menu')]),
+            'contents' => view('sinmungo/search', ['menu' => view('sinmungo/menu'), 'units' => $units, 'categories' => $categories]),
         ];
 
         return view('layouts/index', $data);
