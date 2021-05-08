@@ -1,5 +1,6 @@
 body {
   font-family: "Yeon Sung", cursive;
+  background-color: #f9f9f9;
 }
 .navbar {
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -23,4 +24,16 @@ body {
 .view,
 .search {
   margin-top: 30px;
+}
+.paging {
+  margin-top: 20px;
+  text-align: center;
+}
+.paging .link {
+  display: inline;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  margin: 2px;
 }

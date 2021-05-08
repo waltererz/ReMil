@@ -28,6 +28,10 @@
             </select>
         </div>
         <div class="col-lg-12">
+            <label for="inputSubject" class="form-label">제목</label>
+                <input type="text" name="subject" class="form-control" id="inputSubject">
+            </div>
+        <div class="col-lg-12">
             <div class="form-floating">
                 <textarea class="form-control" name="comment" placeholder="이곳에 내용을 입력하세요." id="inputComment" style="height: 100px"></textarea>
                 <label for="inputComment">내용</label>

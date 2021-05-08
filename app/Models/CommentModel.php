@@ -12,7 +12,7 @@ class CommentModel extends Model {
     protected $returnType       = 'object';
     protected $useSoftDeletes   = true;
 
-    protected $allowedFields    = ['email', 'password', 'category', 'unit', 'comment'];
+    protected $allowedFields    = ['email', 'password', 'category', 'unit', 'subject', 'comment'];
 
     protected $useTimestamps    = false;
 }
