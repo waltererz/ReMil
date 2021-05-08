@@ -1,6 +1,6 @@
 <?php echo $menu; ?>
 <div class="search col-lg-12">
-    <form id="insertForm" action="/sinmungo/list" method="get" class="row g-3">
+    <form id="insertForm" action="/sinmungo/list" method="get" class="g-3">
         <div class="card">
             <div class="card-header">검색하기</div>
             <div class="card-body">
