@@ -27,7 +27,7 @@
                     <a class="nav-link<?php preg_match('/^\/sinmungo(\/*)/', $_SERVER['REDIRECT_URL'], $match); if (isset($match[0]) && $match[0]) { ?> active<?php } ?>" aria-current="page" href="/sinmungo">신문고</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link<?php preg_match('/^\/praise(\/*)/', $_SERVER['REDIRECT_URL'], $match); if (isset($match[0]) && $match[0]) { ?> active<?php } ?>" aria-current="page" href="#">칭찬합시다</a>
+                    <a class="nav-link<?php preg_match('/^\/praise(\/*)/', $_SERVER['REDIRECT_URL'], $match); if (isset($match[0]) && $match[0]) { ?> active<?php } ?>" aria-current="page" href="#">칭찬합시다 (준비중)</a>
                 </li>
             </ui>
         </div>

@@ -1,4 +1,7 @@
 <?php echo $menu; ?>
+<div class="alert alert-warning" role="alert" style="font-size: 1.1em; margin-bottom: 30px;">
+  특정 부대 및 분류에 대해서 확인하고 싶다면 위 메뉴에서 검색하기 기능을 사용하세요.
+</div>
 <div class="list row">
     <?php
         foreach ($list as $row) {
