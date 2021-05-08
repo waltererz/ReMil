@@ -5,6 +5,9 @@
   이 사이트는 개인정보를 저장하지 않기 때문에 내부고발에 대한 피해를 줄일 수 있을 것으로 기대합니다.<br /><br />
   문의: remilkr.official@gmail.com
 </div>
+<div class="alert alert-danger" role="alert" style="font-size:1.2em;">
+  아쉽게도 현재 이미지 업로드 기능은 지원하지 않고 있습니다. 추후 업데이트를 통해 지원할 수 있도록 하겠습니다.<br />
+  반드시 이미지가 필요한 내용이라면 외부에 이미지를 업로드한 후 해당 이미지의 URL을 입력해주시면 감사하겠습니다.</div>
 <div class="insert col-lg-12">
     <form id="insertForm" method="post" class="row g-3">
         <div class="col-lg-6">
