@@ -48,7 +48,7 @@
         <div class="col-lg-12">
             <textarea name="comment" id="editor"></textarea>
         </div>
-        <div class="col-lg-12">
+        <div class="col-lg-12" style="margin: 20px 0px 40px 0px">
             <button type="button" id="form-button" class="btn btn-primary">등록하기</button>
         </div>
     </form>
