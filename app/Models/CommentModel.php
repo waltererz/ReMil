@@ -1,9 +1,11 @@
 <?php
+
 namespace App\Models;
 
 use CodeIgniter\Model;
 
-class CommentModel extends Model {
+class CommentModel extends Model
+{
     protected $table            = 'comments';
     protected $primaryKey       = 'id';
 
@@ -12,7 +14,7 @@ class CommentModel extends Model {
     protected $returnType       = 'object';
     protected $useSoftDeletes   = true;
 
-    protected $allowedFields    = ['email', 'password', 'category', 'unit', 'subject', 'comment'];
+    protected $allowedFields    = ['email', 'password', 'category', 'unit', 'subject', 'comment', 'timestamp'];
 
     protected $useTimestamps    = false;
 }
